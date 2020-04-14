@@ -1,0 +1,29 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.app-wrapper {
+    display: grid;
+    grid-template-areas: "h h""n c";
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    &__content {
+        grid-area: c;
+        background-color: rgb(47, 149, 184);
+    }
+}

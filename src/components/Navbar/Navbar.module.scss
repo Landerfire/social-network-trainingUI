@@ -1,0 +1,16 @@
+.nav {
+    grid-area: n;
+    background-color: red;
+    width: 200px;
+    padding: 20px;
+}
+
+.item {
+    color: #fff;
+    margin-bottom: 5px;
+    cursor: pointer;
+
+    a.active {
+        color: gold;
+    }
+}

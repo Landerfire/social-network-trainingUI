@@ -1,0 +1,16 @@
+.picture {
+    background-size: contain;
+    background-repeat: no-repeat;
+    max-height: 200px;
+}
+
+.description__block {
+    padding: 10px;
+
+    .description {
+        padding: 10px 0 0 25px;
+        font-size: 25px;
+        color: silver;
+        font-style: italic;
+    }
+}
