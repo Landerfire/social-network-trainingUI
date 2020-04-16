@@ -3,6 +3,7 @@ import { profileAPI } from "../api/api";
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
+const SET_STATUS = 'SET-STATUS';
 
 let initialState = {
     posts: [
@@ -13,6 +14,7 @@ let initialState = {
     ],
     newPostText: "",
     profile: null,
+    status: "",
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -41,41 +43,46 @@ const profileReducer = (state = initialState, action) => {
                 profile: action.profile
             }
         }
+        case SET_STATUS: {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
 
         default:
             return state;
     }
 }
 
+// ACTION CREATORS //
+
 export const addPostActionCreator = () => ({ type: ADD_POST });
 // если функция возвращает лишь одну строку, мы можем убрать return и фигурные скобки, но нужно обернуть объект в круглые скобки
 export const updateNewPostTextActionCreator = (text) =>
     ({ type: UPDATE_NEW_POST_TEXT, newText: text });
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
+export const setStatus = (status) => ({ type: SET_STATUS, status });
+
+// THUNKS //
 
 export const getUserProfile = (userId) => (dispatch) => {
     profileAPI.getProfile(userId).then(data => {
         dispatch(setUserProfile(data));
-    });
+    })
 }
+export const getStatus = (userId) => (dispatch) => {
+    profileAPI.getStatus(userId).then(response => {
+        dispatch(setStatus(response.data));
+    })
+}
+export const updateStatus = (status) => (dispatch) => {
+    profileAPI.updateStatus(status).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status));
+        }
+    })
+}
+
 
 export default profileReducer;
-
-/* было перенесено из store
-
-if (action.type === ADD_POST) {
-    let newPost = {
-        id: 5,
-        message: this._state.profilePage.newPostText,
-        likesCount: 0
-    }
-    this._state.profilePage.posts.push(newPost);
-    this._state.profilePage.newPostText = "";
-    this._callSubscriber(this._state);
-}
-else if (action.type === UPDATE_NEW_POST_TEXT) {
-    this._state.profilePage.newPostText = action.newText;
-    this._callSubscriber(this._state);
-}
-
-*/
