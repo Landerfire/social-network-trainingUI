@@ -1,4 +1,3 @@
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
 let initialState = {
@@ -18,13 +17,12 @@ let initialState = {
         { id: 5, name: 'Victor' },
         { id: 6, name: 'Valera' },
     ],
-    newMessageBody: "",
 };
 
 const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
         case SEND_MESSAGE:
-            let body = state.newMessageBody;
+            let body = action.newMessageBody;
             let newMessage = {
                 id: 7,
                 message: body
@@ -32,44 +30,15 @@ const dialogsReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                newMessageBody: "",
                 messages: [...state.messages, newMessage]
             };
             // stateCopy.messages.push(newMessage);
             // stateCopy.newMessageBody = "";
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {
-                ...state,
-                newMessageBody: action.body
-            };
-            // stateCopy.newMessageBody = action.body;
         default:
             return state;
     }
 }
 
-export const sendMessageCreator = () => ({ type: SEND_MESSAGE });
-export const updateNewMessageBodyCreator = (body) =>
-    ({ type: UPDATE_NEW_MESSAGE_BODY, body: body });
+export const sendMessageCreator = (newMessageBody) => ({ type: SEND_MESSAGE, newMessageBody });
 
 export default dialogsReducer;
-
-
-
-/* было из store
-
-if (action.type === SEND_MESSAGE) {
-    let newMessage = {
-        id: 7,
-        message: this._state.dialogsPage.newMessageBody,
-    }
-    this._state.dialogsPage.messages.push(newMessage);
-    this._state.dialogsPage.newMessageBody = "";
-    this._callSubscriber(this._state);
-}
-else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-    this._state.dialogsPage.newMessageBody = action.body;
-    this._callSubscriber(this._state);
-}
-
-*/
