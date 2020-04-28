@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './Users.module.scss';
+import style from './Users.module.scss';
 import userPhoto from '../../assets/images/user.png'
 import { NavLink } from 'react-router-dom';
 
@@ -12,9 +12,9 @@ let Users = (props) => {
 
     return (
         <div>
-            <div className={s.pages}>
+            <div className={style.pages}>
                 {pages.map(p => {
-                    return <span className={props.currentPage === p && s.selectedPage}  // то же что и {props.currentPage === p ? s.selectedPage}
+                    return <span className={props.currentPage === p ? style.selectedPage : ""}  // то же что{props.currentPage === p && style.selectedPage}
                         onClick={(event) => { props.onPageChanged(p) }}>{p}</span>
                 })}
             </div>
@@ -23,7 +23,7 @@ let Users = (props) => {
                     <span>
                         <div>
                             <NavLink to={'/profile/' + u.id}>
-                                <img className={s.userPhoto} src={u.photos.small != null ? u.photos.small : userPhoto} alt="" />
+                                <img className={style.userPhoto} src={u.photos.small != null ? u.photos.small : userPhoto} alt="" />
                             </NavLink>
                         </div>
                         <div>
