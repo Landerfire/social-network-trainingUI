@@ -6,29 +6,6 @@ import { required, maxLengthCreator } from '../../../utils/validators/validators
 import { Textarea } from '../../Common/FormsControls/FormsControls';
 
 
-const MyPosts = (props) => {
-    let postsElements = props.posts.map(p => <Post
-        message={p.message}
-        likesCount={p.likesCount} />)
-
-    let onAddPost = (values) => {
-        props.addPost(values.newPostText);
-        console.log(values.newPostText);
-    }
-
-    return (
-        <div className={s.posts__block}>
-            <h3>My Posts</h3>
-            <div>
-                <AddNewPostFormRedux onSubmit={onAddPost} />
-            </div>
-            <div className={s.posts}>
-                {postsElements}
-            </div>
-        </div >
-    )
-}
-
 const maxLength10 = maxLengthCreator(10);
 
 const AddNewPostForm = (props) => {
@@ -44,5 +21,30 @@ const AddNewPostForm = (props) => {
     )
 }
 const AddNewPostFormRedux = reduxForm({ form: "ProfileAddNewPostForm" })(AddNewPostForm)
+
+
+const MyPosts = React.memo(props => {
+    console.log("RENDER");
+    
+    let postsElements = props.posts.map(p => <Post
+        message={p.message}
+        likesCount={p.likesCount} />)
+
+    let onAddPost = (values) => {
+        props.addPost(values.newPostText);
+    }
+
+    return (
+        <div className={s.posts__block}>
+            <h3>My Posts</h3>
+            <div>
+                <AddNewPostFormRedux onSubmit={onAddPost} />
+            </div>
+            <div className={s.posts}>
+                {postsElements}
+            </div>
+        </div >
+    )
+});
 
 export default MyPosts;

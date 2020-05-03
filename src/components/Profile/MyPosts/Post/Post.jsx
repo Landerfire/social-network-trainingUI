@@ -3,7 +3,7 @@ import s from './Post.module.scss';
 
 const Post = (props) => {
 
-    console.log(props.message);
+    // console.log(props.message);
 
     return (
         <div className={s.item}>

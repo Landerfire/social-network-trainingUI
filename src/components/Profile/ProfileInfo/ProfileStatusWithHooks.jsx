@@ -10,13 +10,6 @@ const ProfileStatusWithHooks = (props) => {
         setStatus(props.status)
     }, [props.status] );
 
-    // useEffect(() => {
-    //     effect
-    //     return () => {
-    //         cleanup
-    //     };
-    // }, [input]);
-
     const activateEditMode = () => {
         setEditMode(true);
     }
