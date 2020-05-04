@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-
 const ProfileStatusWithHooks = (props) => {
 
     const [editMode, setEditMode] = useState(false); // деструктурированное присваивание
