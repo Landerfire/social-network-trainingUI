@@ -1,4 +1,4 @@
-import { profileAPI } from "../api/api";
+import {profileAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
@@ -7,10 +7,10 @@ const DELETE_POST = 'DELETE_POST';
 
 let initialState = {
     posts: [
-        { id: 1, message: "Hi, how are you?", likesCount: 15 },
-        { id: 2, message: "It's my first post", likesCount: 9 },
-        { id: 3, message: "Do u know da way?", likesCount: 1 },
-        { id: 4, message: "Get over here!", likesCount: 99 },
+        {id: 1, message: "Hi, how are you?", likesCount: 15},
+        {id: 2, message: "It's my first post", likesCount: 9},
+        {id: 3, message: "Do u know da way?", likesCount: 1},
+        {id: 4, message: "Get over here!", likesCount: 99},
     ],
     profile: null,
     status: "",
@@ -55,30 +55,29 @@ const profileReducer = (state = initialState, action) => {
 
 // ACTION CREATORS //
 
-export const addPostActionCreator = (newPostText) => ({ type: ADD_POST, newPostText });
+export const addPostActionCreator = (newPostText) => ({type: ADD_POST, newPostText});
 // если функция возвращает лишь одну строку, мы можем убрать return и фигурные скобки, но нужно обернуть объект в круглые скобки
-export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
-export const setStatus = (status) => ({ type: SET_STATUS, status });
-export const deletePost = (postId) => ({ type: DELETE_POST, postId });
+export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
+export const setStatus = (status) => ({type: SET_STATUS, status});
+export const deletePost = (postId) => ({type: DELETE_POST, postId});
 
 // THUNKS //
 
-export const getUserProfile = (userId) => (dispatch) => {
-    profileAPI.getProfile(userId).then(data => {
-        dispatch(setUserProfile(data));
-    })
+export const getUserProfile = (userId) => async (dispatch) => {
+    let data = await profileAPI.getProfile(userId);
+    dispatch(setUserProfile(data));
 }
-export const getStatus = (userId) => (dispatch) => {
-    profileAPI.getStatus(userId).then(response => {
-        dispatch(setStatus(response.data));
-    })
+
+export const getStatus = (userId) => async (dispatch) => {
+    let response = await profileAPI.getStatus(userId);
+    dispatch(setStatus(response.data));
 }
-export const updateStatus = (status) => (dispatch) => {
-    profileAPI.updateStatus(status).then(response => {
-        if (response.data.resultCode === 0) {
-            dispatch(setStatus(status));
-        }
-    })
+
+export const updateStatus = (status) => async (dispatch) => {
+    let response = await profileAPI.updateStatus(status);
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status));
+    }
 }
 
 

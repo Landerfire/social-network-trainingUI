@@ -2,18 +2,3 @@
     width: 120px;
     height: 120px;
 }
-
-.pages {
-    cursor: pointer;
-    margin: 10px 0 20px 10px;
-    display: flex;
-    flex-wrap: wrap;
-
-    span {
-        margin-right: 5px;
-    }
-
-    .selectedPage {
-        color: gold;
-    }
-}

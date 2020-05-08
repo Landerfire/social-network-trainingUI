@@ -3,24 +3,21 @@ import s from './ProfileInfo.module.scss';
 import Preloader from '../../Common/Preloader/Preloader';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 
-const ProfileInfo = (props) => {
-    if (!props.profile) {
+const ProfileInfo = ({profile, status, updateStatus}) => {
+    if (!profile) {
         return <Preloader />
     }
 
     return (
         <div>
-            {/* <div>
-                <img className={s.picture} src="https://openimagedenoise.github.io/images/moana_16spp_oidn.jpg" alt="" />
-            </div> */}
             <div className={s.description__block}>
-                <img src={props.profile.photos.large} alt="" />
+                <img src={profile.photos.large} alt="" />
                 <div className={s.status}>
                     <p>Статус:</p>
-                    <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
+                    <ProfileStatusWithHooks status={status} updateStatus={updateStatus} />
                 </div>
                 <div className={s.description}>
-                    <p>{props.profile.aboutMe}</p>
+                    <p>{profile.aboutMe}</p>
                 </div>
             </div>
         </div>
