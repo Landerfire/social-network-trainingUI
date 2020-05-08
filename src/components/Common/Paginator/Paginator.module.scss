@@ -1,15 +1,40 @@
-.pages {
-  cursor: pointer;
-  margin: 10px 0 20px 10px;
+@mixin flex-center {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
+}
 
-  span {
-    margin-right: 5px;
-  }
+.paginator {
+  @include flex-center;
 
-  .selectedPage {
-    color: gold;
-    font-weight: bold;
+  .paginatorWrapper {
+    @include flex-center;
+    align-items: center;
+    margin: 10px 0 10px;
+
+    .pages {
+      cursor: pointer;
+      min-width: 300px;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 10px;
+
+      span {
+        /* */
+      }
+
+      .selectedPage {
+        color: gold;
+        font-weight: bold;
+      }
+    }
+
+    .btnBlock {
+      width: 50px;
+
+      .btn {
+        height: 30px;
+        width: 50px;
+      }
+    }
   }
 }
