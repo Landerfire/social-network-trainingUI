@@ -18,6 +18,7 @@ import {
     getFollowingInProgress,
     getIsFetching,
     getPageSize,
+    getPortionSize,
     getTotalUsersCount,
     getUsers,
 } from "../../redux/users-selectors";
@@ -48,6 +49,7 @@ class UsersContainer extends React.Component {
                        unfollow={this.props.unfollow}
                        followingInProgress={this.props.followingInProgress}
                        toggleFollowingProgress={this.props.toggleFollowingProgress}
+                       portionSize={this.props.portionSize}
                 />
             </>
         )
@@ -62,6 +64,7 @@ let mapStateToProps = (state) => {
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
+        portionSize: getPortionSize(state),
     }
 }
 
