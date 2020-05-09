@@ -38,7 +38,6 @@ class App extends React.Component {
                 <div className="app-wrapper__content">
                     <Suspense fallback={<div><Preloader /></div>}>
                         <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-                        {/*<Route path="/dialogs" render={() => <DialogsContainer />} />*/}
                     </Suspense>
                     <Route path="/dialogs" render={withSuspense(DialogsContainer)} />
                     <Route path="/news" render={withSuspense(News)} />
@@ -63,10 +62,10 @@ let AppContainer = compose(
     connect(mapStateToProps, {initializeApp})
 )(App);
 
-const SamuraiJSApp = (props) => {
+const SamuraiJSApp = () => {
     return <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Provider store={store}>
-            <AppContainer />
+            <AppContainer/>
         </Provider>
     </BrowserRouter>
 }
