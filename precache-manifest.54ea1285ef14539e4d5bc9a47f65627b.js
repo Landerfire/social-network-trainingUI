@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6baaf6410e0d2d47de8a38edf430c9c4",
+    "revision": "bd17a9d4d555e456a6fab1fa56772d48",
     "url": "/IT-KAMA/index.html"
   },
   {
@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/IT-KAMA/static/css/4.fd8676db.chunk.css"
   },
   {
-    "revision": "827bff962248da8b4252",
+    "revision": "5e386b8bae7e707796cc",
     "url": "/IT-KAMA/static/css/main.ec6f7117.chunk.css"
   },
   {
@@ -32,8 +32,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/IT-KAMA/static/js/4.26fa5d5b.chunk.js"
   },
   {
-    "revision": "827bff962248da8b4252",
-    "url": "/IT-KAMA/static/js/main.03c8a8db.chunk.js"
+    "revision": "5e386b8bae7e707796cc",
+    "url": "/IT-KAMA/static/js/main.d0a70807.chunk.js"
   },
   {
     "revision": "62cf13d73781f1778d6e",
