@@ -1,26 +1,25 @@
-.picture {
-    background-size: contain;
-    background-repeat: no-repeat;
-    max-height: 200px;
+.mainPhoto {
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .description__block {
-    padding: 10px;
+  padding: 10px;
 
-    .status {
-        font-style: italic;
-        font-size: 18px;
+  .status {
+    font-style: italic;
+    font-size: 18px;
 
-        p {
-            font-style: normal;
-            margin: 0;
-        }
+    p {
+      font-style: normal;
+      margin: 0;
     }
+  }
 
-    .description {
-        padding: 10px 0 0 10px;
-        font-size: 20px;
-        color: silver;
-        font-style: italic;
-    }
+  .description {
+    padding: 10px 0 0 10px;
+    font-size: 20px;
+    color: silver;
+    font-style: italic;
+  }
 }

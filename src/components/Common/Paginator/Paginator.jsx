@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import style from './Paginator.module.scss';
+import cn from 'classnames';
 
 let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize}) => {
 
@@ -32,7 +33,9 @@ let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portion
                         .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                         .map((p) => {
                             return <span
-                                className={currentPage === p ? style.selectedPage : null}  // то же что{props.currentPage === p && style.selectedPage}
+                                className={cn({
+                                    [style.selectedPage]: currentPage === p
+                                }, style.pageNumber)}// было: className={currentPage === p ? style.selectedPage : null}
                                 onClick={(event) => {
                                     onPageChanged(p)
                                 }}>{p}</span>
