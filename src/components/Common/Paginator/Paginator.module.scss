@@ -23,8 +23,12 @@
       }
 
       .selectedPage {
-        color: gold;
+        color: gold !important;
         font-weight: bold;
+      }
+
+      .pageNumber {
+        color: white;
       }
     }
 
