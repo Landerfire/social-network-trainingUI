@@ -1,25 +1,66 @@
-.mainPhoto {
-  max-width: 200px;
-  max-height: 200px;
-}
-
-.description__block {
+.profileInfoBlock {
   padding: 10px;
 
-  .status {
-    font-style: italic;
-    font-size: 18px;
+  .mainInfoBlock {
+    margin-bottom: 10px;
 
-    p {
-      font-style: normal;
-      margin: 0;
+    .userName {
+      font-size: 24px;
+      padding-left: 10px;
+    }
+
+    .status {
+      font-style: italic;
+      font-size: 18px;
+      padding-left: 45px;
+
+      p {
+        font-style: normal;
+        margin: 0;
+      }
     }
   }
 
-  .description {
-    padding: 10px 0 0 10px;
-    font-size: 20px;
-    color: silver;
-    font-style: italic;
+  .profilePhotoBlock {
+    margin-bottom: 10px;
+
+    .mainPhoto {
+      max-width: 200px;
+      max-height: 200px;
+    }
+  }
+
+  .descriptionBlock {
+    margin-bottom: 10px;
+
+    .userJob {
+
+    }
+
+    .userProfessionalSkills{
+
+    }
+
+    .description {
+      padding: 10px 0 0 10px;
+      font-size: 20px;
+      color: silver;
+      font-style: italic;
+    }
+  }
+
+  .contactsInfoBlock {
+
+    p {
+      margin-bottom: 5px;
+    }
+
+    .contacts {
+      padding-left: 10px;
+
+      .contact {
+
+      }
+    }
   }
 }
