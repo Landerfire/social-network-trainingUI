@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 
 const ProfileStatusWithHooks = (props) => {
 
     const [editMode, setEditMode] = useState(false); // деструктурированное присваивание
     const [status, setStatus] = useState(props.status);
 
-    useEffect( () => {
+    useEffect(() => {
         setStatus(props.status)
-    }, [props.status] );
+    }, [props.status]);
 
     const activateEditMode = () => {
         setEditMode(true);
     }
-    
+
     const deactivateEditMode = () => {
         setEditMode(false);
         props.updateStatus(status);
@@ -25,14 +25,14 @@ const ProfileStatusWithHooks = (props) => {
     return (
         <div>
             {!editMode &&
-                <div>
-                    <span onDoubleClick={activateEditMode}>{props.status || "Клик-клик"}</span>
-                </div>
+            <div>
+                <span onDoubleClick={activateEditMode}>{props.status || "Клик-клик"}</span>
+            </div>
             }
             {editMode &&
-                <div>
-                    <input autoFocus onChange={onStatusChange} onBlur={deactivateEditMode} value={status} /> {/* status из useState */}
-                </div>
+            <div>
+                <input autoFocus onChange={onStatusChange} onBlur={deactivateEditMode} value={status} /> {/* status из useState */}
+            </div>
             }
         </div>
     )

@@ -29,6 +29,7 @@ const MyPosts = React.memo(props => {
         [...props.posts]
             .reverse()
             .map(p => <Post
+                key={p.id}
                 message={p.message}
                 likesCount={p.likesCount} />)
 
