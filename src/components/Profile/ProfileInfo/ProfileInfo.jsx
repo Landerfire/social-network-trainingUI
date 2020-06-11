@@ -11,7 +11,7 @@ import instagram from '../../../assets/images/instagram.svg';
 import twitter from '../../../assets/images/twitter.svg';
 import youtube from '../../../assets/images/youtube.svg';
 import website from '../../../assets/images/website.png';
-import mainlink from '../../../assets/images/mainlink.png';
+import mainLink from '../../../assets/images/mainlink.png';
 
 const ProfileInfo = ({isOwner, profile, status, updateStatus, savePhoto, saveProfile}) => {
 
@@ -101,7 +101,7 @@ const ProfileContacts = ({profile}) => {
     </div>
 }
 
-const iconSort = (iconName) => {
+const contactsIcons = (iconName) => {
     const icon = (iconPath, iconName, title) => {
         return <img className={s.contactIcon} src={iconPath} alt={iconName} title={title} />
     }
@@ -135,7 +135,7 @@ const iconSort = (iconName) => {
             return icon(iconPath, iconName, title);
         }
         case "mainLink": {
-            let [title, iconPath] = ["Main Link", mainlink];
+            let [title, iconPath] = ["Main Link", mainLink];
             return icon(iconPath, iconName, title);
         }
         default: {
@@ -150,7 +150,7 @@ const Contact = ({contactTitle, contactValue, contactId, iconName}) => {
         {contactValue &&
         <a className={s.contact} id={contactId} href={contactValue} target="_blank" rel="noopener noreferrer">
             {/*{contactTitle}*/}
-            {iconSort(iconName)}
+            {contactsIcons(iconName)}
         </a>
         }
     </div>
