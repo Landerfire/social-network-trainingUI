@@ -1,11 +1,12 @@
-import {profileAPI} from "../api/api";
-import {stopSubmit} from "redux-form";
+import {profileAPI} from "../api/api"
+import {stopSubmit} from "redux-form"
+import {PhotosType, PostsType, ProfileType} from "../types/types";
 
-const ADD_POST = 'ADD-POST';
-const SET_USER_PROFILE = 'SET-USER-PROFILE';
-const SET_STATUS = 'SET-STATUS';
-const DELETE_POST = 'DELETE_POST';
-const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
+const ADD_POST = 'ADD-POST'
+const SET_USER_PROFILE = 'SET-USER-PROFILE'
+const SET_STATUS = 'SET-STATUS'
+const DELETE_POST = 'DELETE_POST'
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
 let initialState = {
     posts: [
@@ -13,12 +14,15 @@ let initialState = {
         {id: 2, message: "It's my first post", likesCount: 9},
         {id: 3, message: "Do u know da way?", likesCount: 1},
         {id: 4, message: "Get over here!", likesCount: 99},
-    ],
-    profile: null,
+    ] as Array<PostsType>,
+    profile: null as ProfileType | null,
     status: "",
-};
+    newPostText: "",
+}
 
-const profileReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
+
+const profileReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
@@ -28,7 +32,8 @@ const profileReducer = (state = initialState, action) => {
             }
             return {
                 ...state,
-                posts: [...state.posts, newPost]
+                posts: [...state.posts, newPost],
+                newPostText: ""
             }
         }
         case SET_USER_PROFILE: {
@@ -50,10 +55,9 @@ const profileReducer = (state = initialState, action) => {
             }
         }
         case SAVE_PHOTO_SUCCESS: {
-            debugger
             return {
                 ...state,
-                profile: {...state.profile, photos: action.photos}
+                profile: {...state.profile, photos: action.photos} as ProfileType // need to refactor this
             }
         }
 
@@ -64,26 +68,47 @@ const profileReducer = (state = initialState, action) => {
 
 // ACTION CREATORS //
 
-export const addPostActionCreator = (newPostText) => ({type: ADD_POST, newPostText});
+type addPostActionType = {
+    type: typeof ADD_POST
+    newPostText: string
+}
+type SetUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    profile: ProfileType
+}
+type SetStatusActionType = {
+    type: typeof SET_STATUS
+    status: string
+}
+type DeletePostActionType = {
+    type: typeof DELETE_POST
+    postId: number
+}
+type SavePhotoSuccessActionType = {
+    type: typeof SAVE_PHOTO_SUCCESS
+    photos: PhotosType
+}
+
+export const addPostActionCreator = (newPostText: string): addPostActionType => ({type: ADD_POST, newPostText});
 // если функция возвращает лишь одну строку, мы можем убрать return и фигурные скобки, но нужно обернуть объект в круглые скобки
-export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
-export const setStatus = (status) => ({type: SET_STATUS, status});
-export const deletePost = (postId) => ({type: DELETE_POST, postId});
-export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos});
+export const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({type: SET_USER_PROFILE, profile});
+export const setStatus = (status: string): SetStatusActionType => ({type: SET_STATUS, status});
+export const deletePost = (postId: number): DeletePostActionType => ({type: DELETE_POST, postId});
+export const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccessActionType => ({type: SAVE_PHOTO_SUCCESS, photos});
 
 // THUNKS //
 
-export const getUserProfile = (userId) => async (dispatch) => {
+export const getUserProfile = (userId: number) => async (dispatch: any) => {
     let data = await profileAPI.getProfile(userId);
     dispatch(setUserProfile(data));
 }
 
-export const getStatus = (userId) => async (dispatch) => {
+export const getStatus = (userId: number) => async (dispatch: any) => {
     let response = await profileAPI.getStatus(userId);
     dispatch(setStatus(response.data));
 }
 
-export const updateStatus = (status) => async (dispatch) => {
+export const updateStatus = (status: string) => async (dispatch: any) => {
     try {
         let response = await profileAPI.updateStatus(status);
 
@@ -95,7 +120,7 @@ export const updateStatus = (status) => async (dispatch) => {
     }
 }
 
-export const savePhoto = (file) => async (dispatch) => {
+export const savePhoto = (file: any) => async (dispatch: any) => {
     let response = await profileAPI.savePhoto(file);
 
     if (response.data.resultCode === 0) {
@@ -103,7 +128,7 @@ export const savePhoto = (file) => async (dispatch) => {
     }
 }
 
-export const saveProfile = (profile) => async (dispatch, getState) => {
+export const saveProfile = (profile: ProfileType) => async (dispatch: any, getState: any) => {
     const userId = getState().auth.userId;
     let response = await profileAPI.saveProfile(profile);
 
@@ -116,4 +141,4 @@ export const saveProfile = (profile) => async (dispatch, getState) => {
 }
 
 
-export default profileReducer;
+export default profileReducer
