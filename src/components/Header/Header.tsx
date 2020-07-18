@@ -1,8 +1,14 @@
-import React from 'react';
-import s from './Header.module.scss';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import s from './Header.module.scss'
+import { NavLink } from 'react-router-dom'
 
-const Header = (props) => {
+type PropsType = {
+    isAuth: boolean
+    login: string | null
+    logout: () => void
+}
+
+const Header = (props: PropsType) => {
     return (
         <header className={s.header}>
             <img src="https://s1.logaster.com/static/v3/img/products/logo.png" alt="logo" />
@@ -17,4 +23,4 @@ const Header = (props) => {
     )
 }
 
-export default Header;
+export default Header

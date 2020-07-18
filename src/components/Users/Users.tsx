@@ -1,7 +1,7 @@
-import React from 'react';
-import Paginator from "../Common/Paginator/Paginator";
-import User from "./User";
-import {UserType} from "../../types/types";
+import React from 'react'
+import Paginator from "../Common/Paginator/Paginator"
+import User from "./User"
+import {UserType} from "../../types/types"
 
 type PropsType = {
     currentPage: number
@@ -25,7 +25,6 @@ let Users = ({currentPage, onPageChanged, totalUsersCount, pageSize, users, ...p
             <div>
                 {
                     users.map(u => <User user={u}
-                                         key={u.id}
                                          followingInProgress={props.followingInProgress}
                                          unfollow={props.unfollow} follow={props.follow}/>
                     )
