@@ -1,6 +1,6 @@
 import {usersAPI} from "../api/api"
 import {updateObjectInArray} from "../utils/object-helpers"
-import {UserType} from "../types/types";
+import {UserType} from "../types/types"
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -12,13 +12,12 @@ const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 
 let initialState = {
-    users: {} as Array<UserType>,
+    users: [] as Array<UserType>,
     pageSize: 15,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
     followingInProgress: [] as Array<number>, // array of users id
-    portionSize: 10,
 }
 
 type InitialStateType = typeof initialState
