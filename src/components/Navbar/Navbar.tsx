@@ -1,8 +1,10 @@
-import React from 'react';
-import s from './Navbar.module.scss';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import s from './Navbar.module.scss'
+import { NavLink } from 'react-router-dom'
 
-const Navbar = () => {
+type PropsType = {}
+
+const Navbar = (props: PropsType) => {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
@@ -27,4 +29,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar;
+export default Navbar

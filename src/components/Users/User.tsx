@@ -1,16 +1,24 @@
-import React from 'react';
-import style from './Users.module.scss';
+import React from 'react'
+import style from './Users.module.scss'
 import userPhoto from '../../assets/images/user.png'
-import {NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom'
+import {UserType} from "../../types/types"
 
-let User = ({user, followingInProgress, follow, unfollow}) => {
+type PropsType = {
+    user: UserType
+    followingInProgress: Array<number>
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+}
+
+let User = ({user, followingInProgress, follow, unfollow}: PropsType) => {
     return (
         <div>
             <span>
                 <div>
                     <NavLink to={'/profile/' + user.id}>
                         <img className={style.userPhoto}
-                             src={user.photos.small != null ? user.photos.small : userPhoto} alt="" />
+                             src={user.photos.small != null ? user.photos.small : userPhoto} alt=""/>
                     </NavLink>
                 </div>
                 <div>
@@ -43,4 +51,4 @@ let User = ({user, followingInProgress, follow, unfollow}) => {
     )
 }
 
-export default User;
+export default User
