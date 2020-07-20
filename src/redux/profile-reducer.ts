@@ -1,12 +1,15 @@
 import {profileAPI} from "../api/api"
-import {stopSubmit} from "redux-form"
+import {FormAction, stopSubmit} from "redux-form"
 import {PhotosType, PostsType, ProfileType} from "../types/types"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "./redux-store"
 
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET-STATUS'
 const DELETE_POST = 'DELETE_POST'
 const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
+
 
 let initialState = {
     posts: [
@@ -22,7 +25,7 @@ let initialState = {
 
 export type InitialStateType = typeof initialState
 
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
@@ -67,8 +70,9 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
 }
 
 // ACTION CREATORS //
+type ActionTypes = AddPostActionType | SetUserProfileActionType | SetStatusActionType | DeletePostActionType | SavePhotoSuccessActionType
 
-type addPostActionType = {
+type AddPostActionType = {
     type: typeof ADD_POST
     newPostText: string
 }
@@ -89,7 +93,7 @@ type SavePhotoSuccessActionType = {
     photos: PhotosType
 }
 
-export const addPostActionCreator = (newPostText: string): addPostActionType => ({type: ADD_POST, newPostText});
+export const addPostActionCreator = (newPostText: string): AddPostActionType => ({type: ADD_POST, newPostText});
 // если функция возвращает лишь одну строку, мы можем убрать return и фигурные скобки, но нужно обернуть объект в круглые скобки
 export const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({type: SET_USER_PROFILE, profile});
 export const setStatus = (status: string): SetStatusActionType => ({type: SET_STATUS, status});
@@ -97,18 +101,19 @@ export const deletePost = (postId: number): DeletePostActionType => ({type: DELE
 export const savePhotoSuccess = (photos: PhotosType): SavePhotoSuccessActionType => ({type: SAVE_PHOTO_SUCCESS, photos});
 
 // THUNKS //
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
-export const getUserProfile = (userId: number) => async (dispatch: any) => {
-    let data = await profileAPI.getProfile(userId);
-    dispatch(setUserProfile(data));
+export const getUserProfile = (userId: number | null): ThunkType => async (dispatch) => {
+    let data = await profileAPI.getProfile(userId)
+    dispatch(setUserProfile(data))
 }
 
-export const getStatus = (userId: number) => async (dispatch: any) => {
-    let response = await profileAPI.getStatus(userId);
-    dispatch(setStatus(response.data));
+export const getStatus = (userId: number): ThunkType => async (dispatch) => {
+    let response = await profileAPI.getStatus(userId)
+    dispatch(setStatus(response.data))
 }
 
-export const updateStatus = (status: string) => async (dispatch: any) => {
+export const updateStatus = (status: string): ThunkType => async (dispatch) => {
     try {
         let response = await profileAPI.updateStatus(status);
 
@@ -120,23 +125,24 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
     }
 }
 
-export const savePhoto = (file: any) => async (dispatch: any) => {
-    let response = await profileAPI.savePhoto(file);
+export const savePhoto = (file: any): ThunkType => async (dispatch) => {
+    let response = await profileAPI.savePhoto(file)
 
     if (response.data.resultCode === 0) {
-        dispatch(savePhotoSuccess(response.data.data.photos));
+        dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }
 
-export const saveProfile = (profile: ProfileType) => async (dispatch: any, getState: any) => {
-    const userId = getState().auth.userId;
-    let response = await profileAPI.saveProfile(profile);
+export const saveProfile = (profile: ProfileType):
+    ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes | FormAction> => async (dispatch, getState) => {
+    const userId = getState().auth.userId
+    let response = await profileAPI.saveProfile(profile)
 
     if (response.data.resultCode === 0) {
-        dispatch(getUserProfile(userId));
+        dispatch(getUserProfile(userId))
     } else {
         dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0]}));
-        return Promise.reject(response.data.messages[0]);
+        return Promise.reject(response.data.messages[0])
     }
 }
 
