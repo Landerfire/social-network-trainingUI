@@ -5,14 +5,15 @@ import cn from 'classnames';
 type PropsType = {
     totalItemsCount: number
     pageSize: number
-    currentPage: number
+    currentPage?: number
     portionSize?: number
-    onPageChanged: (pageNumber: number) => void
+    onPageChanged?: (pageNumber: number) => void
 }
 
 let Paginator: React.FC<PropsType> = ({
                                           totalItemsCount, pageSize,
-                                          currentPage, onPageChanged,
+                                          currentPage = 1,
+                                          onPageChanged = () => {},
                                           portionSize = 10
                                       }) => {
 
@@ -49,7 +50,7 @@ let Paginator: React.FC<PropsType> = ({
                                 className={cn({
                                     [style.selectedPage]: currentPage === p
                                 }, style.pageNumber)}
-                                onClick={(event) => {
+                                onClick={() => {
                                     onPageChanged(p)
                                 }}>{p}</span>
                         })}
