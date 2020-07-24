@@ -1,10 +1,12 @@
-import React from 'react';
-import s from './Post.module.scss';
+import React from 'react'
+import s from './Post.module.scss'
 
-const Post = (props) => {
+type CurrentProps = {
+    message: string
+    likesCount: number
+}
 
-    // console.log(props.message);
-
+const Post: React.FC<CurrentProps> = (props) => {
     return (
         <div className={s.item}>
             <img src="https://www.meme-arsenal.com/memes/7bdea6754f999b50e9577596f09197fb.jpg" alt="" />
@@ -16,4 +18,4 @@ const Post = (props) => {
     )
 }
 
-export default Post;
+export default Post
