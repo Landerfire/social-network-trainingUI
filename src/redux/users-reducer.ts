@@ -13,9 +13,15 @@ let initialState = {
     currentPage: 1,
     isFetching: true,
     followingInProgress: [] as Array<number> | Array<any>, // array of users id (typescript send bug that "number[] is not number")
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    },
 }
 
 export type InitialStateType = typeof initialState
+
+export type FilterType = typeof initialState.filter
 
 
 const usersReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
@@ -50,6 +56,12 @@ const usersReducer = (state = initialState, action: ActionsTypes): InitialStateT
                     : [state.followingInProgress.filter(id => id !== action.userId)] // фильтрация. возвращает массив, в котором остаются только те id, которые не равны action.id
             }
         }
+        case 'SN/USERS/SET_FILTER': {
+            return {
+                ...state,
+                filter: action.payload
+            }
+        }
 
         default:
             return state
@@ -75,18 +87,20 @@ export const actions = {
         isFetching,
         userId
     } as const),
+    setFilter: (filter: FilterType) => ({type: 'SN/USERS/SET_FILTER', payload: filter} as const),
 }
 
 
 // THUNKS
 type ThunkType = BaseThunkType<ActionsTypes>
 
-export const requestUsers = (currentPage: number, pageSize: number): ThunkType => {
+export const requestUsers = (currentPage: number, pageSize: number, filter: FilterType): ThunkType => {
     return async (dispatch) => {
         dispatch(actions.toggleIsFetching(true))
         dispatch(actions.setCurrentPage(currentPage))
+        dispatch(actions.setFilter(filter))
 
-        let data = await usersAPI.getUsers(currentPage, pageSize)
+        let data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
         dispatch(actions.toggleIsFetching(false))
         dispatch(actions.setUsers(data.items))
         dispatch(actions.setTotalUsersCount(data.totalCount))
