@@ -5,15 +5,15 @@ import {compose} from 'redux'
 import './App.scss'
 import Preloader from './components/Common/Preloader/Preloader'
 import HeaderContainer from './components/Header/HeaderContainer'
-import LoginPage from './components/Login/Login'
+import {LoginPage} from './components/Login/LoginPage'
 import Music from './components/Music/Music'
 import Navbar from './components/Navbar/Navbar'
 import News from './components/News/News'
 import Settings from './components/Settings/Settings'
-import UsersContainer from './components/Users/UsersContainer'
+import {UsersPage} from './components/Users/UsersContainer'
 import {initializeApp} from './redux/app-reducer'
-import store, {AppStateType} from "./redux/redux-store"
-import {withSuspense} from "./hoc/withSuspense"
+import store, {AppStateType} from './redux/redux-store'
+import {withSuspense} from './hoc/withSuspense'
 
 
 const DialogsContainer = React.lazy(() => import(`./components/Dialogs/DialogsContainer`))
@@ -29,65 +29,66 @@ const SuspendedLoginPage = withSuspense(LoginPage)
 
 
 class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
-    catchAllUnhandledErrors = (event: PromiseRejectionEvent) => {
-        alert("Some Error Acquired")
-    }
+   catchAllUnhandledErrors = (event: PromiseRejectionEvent) => {
+      alert('Some Error Acquired')
+   }
 
-    componentDidMount() {
-        this.props.initializeApp()
-        // обработчик ошибок
-        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
-    }
+   componentDidMount() {
+      this.props.initializeApp()
+      // обработчик ошибок
+      window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+   }
 
-    componentWillUnmount() {
-        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors);
-    }
+   componentWillUnmount() {
+      window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+   }
 
-    render() {
-        if (!this.props.initialized) {
-            return <Preloader/>
-        }
+   render() {
+      if (!this.props.initialized) {
+         return <Preloader/>
+      }
 
-        return (
-            <div className="app-wrapper">
-                <HeaderContainer/>
-                <Navbar/>
-                <div className="app-wrapper__content">
+      return (
+         <div className="app-wrapper">
+            <HeaderContainer/>
+            <Navbar/>
+            <div className="app-wrapper__content">
 
-                    <Switch>
-                        <Route exact path="/" render={() => <Redirect to="/Profile"/>}/>
+               <Switch>
+                  <Route exact path="/" render={() => <Redirect to="/Profile"/>}/>
 
-                        <Route path="/profile/:userId?" render={() => <SuspendedProfilePage/>}/>
-                        <Route path="/dialogs" render={() => <SuspendedDialogsPage/>}/>
-                        <Route path="/news" render={() => <News/>}/>
-                        <Route path="/music" render={() => <Music/>}/>
-                        <Route path="/settings" render={() => <Settings/>}/>
-                        <Route path="/users" render={() => <UsersContainer pageTitle={"Самураи"}/>}/>
+                  <Route path="/profile/:userId?" render={() => <SuspendedProfilePage/>}/>
+                  <Route path="/dialogs" render={() => <SuspendedDialogsPage/>}/>
+                  <Route path="/news" render={() => <News/>}/>
+                  <Route path="/music" render={() => <Music/>}/>
+                  <Route path="/settings" render={() => <Settings/>}/>
+                  <Route path="/users" render={() => <UsersPage pageTitle={'Самураи'}/>}/>
 
-                        <Route path="/login" render={() => <SuspendedLoginPage/>}/>
+                  <Route path="/login" render={() => <SuspendedLoginPage/>}/>
 
-                        <Route path="*" render={() => <div>404 NOT FOUND</div>}/>
-                    </Switch>
-                </div>
+                  <Route path="*" render={() => <div>404 NOT FOUND</div>}/>
+               </Switch>
             </div>
-        )
-    }
+         </div>
+      )
+   }
 }
 
+
 const mapStateToProps = (state: AppStateType) => ({
-    initialized: state.app.initialized,
+   initialized: state.app.initialized,
 })
 
 const AppContainer = compose<React.ComponentType>(
-    withRouter,
-    connect(mapStateToProps, {initializeApp}))(App)
+   withRouter,
+   connect(mapStateToProps, {initializeApp}))(App)
 
 const SamuraiJSApp: React.FC = () => {
-    return <HashRouter>
-        <Provider store={store}>
-            <AppContainer/>
-        </Provider>
-    </HashRouter>
+   return <HashRouter>
+      <Provider store={store}>
+         <AppContainer/>
+      </Provider>
+   </HashRouter>
 }
 
 export default SamuraiJSApp
